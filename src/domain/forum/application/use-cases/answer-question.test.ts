@@ -1,5 +1,5 @@
 import { AnswerQuestion } from './answer-question'
-import { AnswersRepository } from '../repositories/answers-repository'
+import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
 
 const fakeAnswersRepository: AnswersRepository = {
   async create() {
