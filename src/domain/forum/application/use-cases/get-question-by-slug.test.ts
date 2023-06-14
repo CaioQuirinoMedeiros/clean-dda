@@ -1,0 +1,30 @@
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+import { QuestionsRepository } from '../repositories/questions-repository'
+import { GetQuestionBySlug } from './get-question-by-slug'
+import { Question } from '../../enterprise/entities/question'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Slug } from '../../enterprise/entities/value-objects/slug'
+
+let questionsRepository: QuestionsRepository
+let sut: GetQuestionBySlug
+
+describe('GetQuestionBySlug', () => {
+  beforeEach(() => {
+    questionsRepository = new InMemoryQuestionsRepository()
+    sut = new GetQuestionBySlug(questionsRepository)
+  })
+
+  it('should be able to get a question by slug', async () => {
+    const createdQuestion = Question.create({
+      authorId: new UniqueEntityID('id-1'),
+      content: 'content',
+      title: 'title 2',
+      slug: Slug.create('slug-x')
+    })
+    questionsRepository.create(createdQuestion)
+
+    const { question } = await sut.execute({ slug: 'slug-x' })
+
+    expect(question.slug.value).toBe(createdQuestion.slug.value)
+  })
+})
