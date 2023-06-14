@@ -8,10 +8,14 @@ interface AnswerQuestionParams {
   content: string
 }
 
+interface AnswerQuestionReturn {
+  answer: Answer
+}
+
 export class AnswerQuestion {
   constructor(private answersRepository: AnswersRepository) {}
 
-  async execute(params: AnswerQuestionParams) {
+  async execute(params: AnswerQuestionParams): Promise<AnswerQuestionReturn> {
     const { instructorId, questionId, content } = params
 
     const answer = Answer.create({
