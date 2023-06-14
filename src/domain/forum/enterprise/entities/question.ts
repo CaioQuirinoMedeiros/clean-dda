@@ -2,7 +2,7 @@ import { Slug } from './value-objects/slug'
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
-interface QuestionProps {
+export interface QuestionProps {
   authorId: UniqueEntityID
   bestAnswerId?: UniqueEntityID
   title: string
@@ -12,7 +12,7 @@ interface QuestionProps {
   updatedAt?: Date
 }
 
-interface QuestionCreateProps {
+export interface QuestionCreateProps {
   authorId: UniqueEntityID
   bestAnswerId?: UniqueEntityID
   title: string
