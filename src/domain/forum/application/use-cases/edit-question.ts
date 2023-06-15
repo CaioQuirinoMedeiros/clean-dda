@@ -1,3 +1,4 @@
+import { Question } from '../../enterprise/entities/question'
 import { QuestionsRepository } from '../repositories/questions-repository'
 
 interface EditQuestionParams {
@@ -7,11 +8,15 @@ interface EditQuestionParams {
   content: string
 }
 
+interface EditQuestionReturn {
+  question: Question
+}
+
 export class EditQuestion {
   constructor(private questionsRepository: QuestionsRepository) {}
 
-  async execute(params: EditQuestionParams): Promise<void> {
-    const {questionId, authorId, title, content } = params
+  async execute(params: EditQuestionParams): Promise<EditQuestionReturn> {
+    const { questionId, authorId, title, content } = params
 
     const question = await this.questionsRepository.findById(questionId)
 
@@ -27,5 +32,7 @@ export class EditQuestion {
     question.content = content
 
     await this.questionsRepository.save(question)
+
+    return { question }
   }
 }
