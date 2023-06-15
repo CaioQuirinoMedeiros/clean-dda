@@ -9,7 +9,7 @@ interface AnswerProps {
   updatedAt?: Date
 }
 
-interface AnswerCreateProps {
+export interface AnswerCreateProps {
   authorId: UniqueEntityID
   questionId: UniqueEntityID
   content: string

@@ -1,7 +1,7 @@
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { GetQuestionBySlug } from './get-question-by-slug'
-import { makeQuestion } from 'test/factories/makeQuestion'
+import { makeQuestion } from 'test/factories/make-question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
 
 let questionsRepository: QuestionsRepository
