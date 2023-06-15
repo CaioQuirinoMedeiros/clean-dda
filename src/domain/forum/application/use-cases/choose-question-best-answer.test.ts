@@ -21,8 +21,8 @@ describe('ChooseQuestionBestAnswer', () => {
     const createdQuestion = makeQuestion()
     const createdAnswer = makeAnswer({ questionId: createdQuestion.id })
 
-    questionsRepository.create(createdQuestion)
-    answersRepository.create(createdAnswer)
+    await questionsRepository.create(createdQuestion)
+    await answersRepository.create(createdAnswer)
 
     await sut.execute({
       authorId: createdQuestion.authorId.toString(),
@@ -40,8 +40,8 @@ describe('ChooseQuestionBestAnswer', () => {
     const createdQuestion = makeQuestion()
     const createdAnswer = makeAnswer({ questionId: createdQuestion.id })
 
-    questionsRepository.create(createdQuestion)
-    answersRepository.create(createdAnswer)
+    await questionsRepository.create(createdQuestion)
+    await answersRepository.create(createdAnswer)
 
     expect(
       sut.execute({

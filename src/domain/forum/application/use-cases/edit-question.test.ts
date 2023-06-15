@@ -18,7 +18,7 @@ describe('EditQuestion', () => {
       content: 'content-X'
     })
 
-    questionsRepository.create(createdQuestion)
+    await questionsRepository.create(createdQuestion)
 
     await sut.execute({
       questionId: createdQuestion.id.toString(),
@@ -38,7 +38,7 @@ describe('EditQuestion', () => {
   it('should not be able to edit a question of another user', async () => {
     const createdQuestion = makeQuestion()
 
-    questionsRepository.create(createdQuestion)
+    await questionsRepository.create(createdQuestion)
 
     expect(
       sut.execute({
