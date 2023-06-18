@@ -5,10 +5,10 @@ export interface AnswersRepository {
   findById(id: string): Promise<Answer | null>
   delete(answer: Answer): Promise<void>
   save(answer: Answer): Promise<void>
-  findManyByQuestionId(params: FindManyByQuestionIdParams): Promise<Answer[]>
+  findManyByQuestionId(params: FindManyAnswersByQuestionIdParams): Promise<Answer[]>
 }
 
-export interface FindManyByQuestionIdParams {
+export interface FindManyAnswersByQuestionIdParams {
   questionId: string
   page: number
 }

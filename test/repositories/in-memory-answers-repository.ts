@@ -1,6 +1,6 @@
 import {
   AnswersRepository,
-  FindManyByQuestionIdParams
+  FindManyAnswersByQuestionIdParams
 } from '@/domain/forum/application/repositories/answers-repository'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
@@ -29,7 +29,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     this.items[answerIndex] = answer
   }
 
-  async findManyByQuestionId(params: FindManyByQuestionIdParams): Promise<Answer[]> {
+  async findManyByQuestionId(params: FindManyAnswersByQuestionIdParams): Promise<Answer[]> {
     const { questionId, page } = params
 
     const size = 20

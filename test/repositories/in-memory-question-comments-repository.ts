@@ -1,4 +1,7 @@
-import { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository'
+import {
+  FindManyQuestionCommentsByQuestionIdParams,
+  QuestionCommentsRepository
+} from '@/domain/forum/application/repositories/question-comments-repository'
 import { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment'
 
 export class InMemoryQuestionCommentsRepository
@@ -21,5 +24,21 @@ export class InMemoryQuestionCommentsRepository
     this.items = this.items.filter((item) => {
       return item.id.value !== questionComent.id.value
     })
+  }
+
+  async findManyByQuestionId(
+    params: FindManyQuestionCommentsByQuestionIdParams
+  ): Promise<QuestionComment[]> {
+    const { questionId, page } = params
+
+    const size = 20
+    const startIndex = (page - 1) * size
+    const endIndex = page * size
+
+    return this.items
+      .filter((item) => {
+        return item.questionId.toString() === questionId
+      })
+      .slice(startIndex, endIndex)
   }
 }
