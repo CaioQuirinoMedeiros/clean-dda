@@ -17,11 +17,9 @@ export class InMemoryQuestionCommentsRepository
     return questionComment || null
   }
 
-
   async delete(questionComent: QuestionComment): Promise<void> {
     this.items = this.items.filter((item) => {
       return item.id.value !== questionComent.id.value
     })
   }
-
 }
