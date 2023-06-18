@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { AnswersRepository } from '../repositories/answers-repository'
-import { AnswerComent } from '../../enterprise/entities/answer-comment'
+import { AnswerComment } from '../../enterprise/entities/answer-comment'
 import { AnswerCommentsRepository } from '../repositories/answer-comments-repository'
 
 interface CommentOnAnswerParams {
@@ -10,7 +10,7 @@ interface CommentOnAnswerParams {
 }
 
 interface CommentOnAnswerReturn {
-  answerComment: AnswerComent
+  answerComment: AnswerComment
 }
 
 export class CommentOnAnswer {
@@ -30,7 +30,7 @@ export class CommentOnAnswer {
       throw new Error('Resource not found')
     }
 
-    const answerComment = AnswerComent.create({
+    const answerComment = AnswerComment.create({
       authorId: new UniqueEntityID(authorId),
       content,
       answerId: new UniqueEntityID(answerId)
