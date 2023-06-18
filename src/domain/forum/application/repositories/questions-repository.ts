@@ -10,3 +10,4 @@ export interface QuestionsRepository {
   save(question: Question): Promise<void>
   findManyRecent(params:PaginationParams): Promise<Question[]>
 }
+
