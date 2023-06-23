@@ -31,10 +31,14 @@ describe('FetchAnswerComments', () => {
       })
     )
 
-    const { answerComments } = await sut.execute({ answerId: 'A', page: 1 })
+    const result = await sut.execute({ answerId: 'A', page: 1 })
 
-    expect(answerComments).toHaveLength(5)
-    expect(answerComments[0].id.toString()).toBe('1')
-    expect(answerComments[answerComments.length - 1].id.toString()).toBe('5')
+    expect(result.isRight()).toBe(true)
+    if (result.isRight()) {
+      const { answerComments } = result.value
+      expect(answerComments).toHaveLength(5)
+      expect(answerComments[0].id.toString()).toBe('1')
+      expect(answerComments[answerComments.length - 1].id.toString()).toBe('5')
+    }
   })
 })

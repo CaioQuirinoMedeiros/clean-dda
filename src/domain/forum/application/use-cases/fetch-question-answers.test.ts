@@ -19,7 +19,7 @@ describe('FetchQuestionAnswers', () => {
     for (let i = 1; i <= 30; i++) {
       createdAnswers.push(
         makeAnswer(
-          { questionId: new UniqueEntityID( i <= 5 ? 'A': "B") },
+          { questionId: new UniqueEntityID(i <= 5 ? 'A' : 'B') },
           new UniqueEntityID(i.toString())
         )
       )
@@ -31,10 +31,14 @@ describe('FetchQuestionAnswers', () => {
       })
     )
 
-    const { answers } = await sut.execute({ questionId: 'A', page: 1 })
+    const result = await sut.execute({ questionId: 'A', page: 1 })
 
-    expect(answers).toHaveLength(5)
-    expect(answers[0].id.toString()).toBe('1')
-    expect(answers[answers.length - 1].id.toString()).toBe('5')
+    expect(result.isRight()).toBe(true)
+    if (result.isRight()) {
+      const { answers } = result.value
+      expect(answers).toHaveLength(5)
+      expect(answers[0].id.toString()).toBe('1')
+      expect(answers[answers.length - 1].id.toString()).toBe('5')
+    }
   })
 })

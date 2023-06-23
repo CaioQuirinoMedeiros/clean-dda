@@ -21,12 +21,16 @@ describe('CommentOnQuestion', () => {
 
     await questionsRepository.create(question)
 
-    const { questionComment } = await sut.execute({
+    const result = await sut.execute({
       authorId: '1',
       questionId: question.id.toString(),
       content: 'Comentario'
     })
 
-    expect(questionComment.content).toBe('Comentario')
+    expect(result.isRight()).toBe(true)
+    if (result.isRight()) {
+      const { questionComment } = result.value
+      expect(questionComment.content).toBe('Comentario')
+    }
   })
 })

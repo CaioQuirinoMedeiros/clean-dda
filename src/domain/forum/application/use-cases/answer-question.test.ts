@@ -12,12 +12,13 @@ describe('AnswerQuestion', () => {
   })
 
   it('should be able to create an answer', async () => {
-    const { answer } = await sut.execute({
+    const result = await sut.execute({
       instructorId: '1',
       questionId: '1',
       content: 'Resposta'
     })
 
-    expect(answer.content).toBe('Resposta')
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.answer.content).toBe('Resposta')
   })
 })

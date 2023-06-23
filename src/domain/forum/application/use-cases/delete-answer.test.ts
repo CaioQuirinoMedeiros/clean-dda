@@ -3,6 +3,7 @@ import { AnswersRepository } from '../repositories/answers-repository'
 import { makeAnswer } from 'test/factories/make-answer'
 import { DeleteAnswer } from './delete-answer'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let answersRepository: AnswersRepository
 let sut: DeleteAnswer
@@ -23,9 +24,9 @@ describe('DeleteAnswer', () => {
       authorId: createdAnswer.authorId.toString()
     })
 
-    expect(
-      answersRepository.findById(createdAnswer.id.toString())
-    ).resolves.toBeNull()
+    const answer = await answersRepository.findById(createdAnswer.id.toString())
+    
+    expect(answer).toBeNull()
   })
 
   it('should not be able to delete an answer of another user', async () => {
@@ -35,11 +36,12 @@ describe('DeleteAnswer', () => {
 
     answersRepository.create(createdAnswer)
 
-    expect(
-      sut.execute({
-        answerId: createdAnswer.id.toString(),
-        authorId: 'another-author'
-      })
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: createdAnswer.id.toString(),
+      authorId: 'another-author'
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

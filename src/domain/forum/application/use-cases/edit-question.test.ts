@@ -2,6 +2,7 @@ import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questio
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { makeQuestion } from 'test/factories/make-question'
 import { EditQuestion } from './edit-question'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let questionsRepository: QuestionsRepository
 let sut: EditQuestion
@@ -40,13 +41,13 @@ describe('EditQuestion', () => {
 
     await questionsRepository.create(createdQuestion)
 
-    expect(
-      sut.execute({
-        questionId: createdQuestion.id.toString(),
-        authorId: 'another-author',
-        title: 'title-Y',
-        content: 'content-Y'
-      })
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      questionId: createdQuestion.id.toString(),
+      authorId: 'another-author',
+      title: 'title-Y',
+      content: 'content-Y'
+    })
+
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

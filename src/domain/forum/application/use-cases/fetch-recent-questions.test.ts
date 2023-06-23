@@ -32,10 +32,14 @@ describe('FetchRecentQuestions', () => {
       })
     )
 
-    const { questions } = await sut.execute({ page: 2 })
+    const result = await sut.execute({ page: 2 })
 
-    expect(questions).toHaveLength(10)
-    expect(questions[0].id.toString()).toBe('21')
-    expect(questions[questions.length - 1].id.toString()).toBe('30')
+    expect(result.isRight()).toBe(true)
+    if (result.isRight()) {
+      const { questions } = result.value
+      expect(result.value.questions).toHaveLength(10)
+      expect(questions[0].id.toString()).toBe('21')
+      expect(questions[questions.length - 1].id.toString()).toBe('30')
+    }
   })
 })

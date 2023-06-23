@@ -15,11 +15,15 @@ describe('GetQuestionBySlug', () => {
 
   it('should be able to get a question by slug', async () => {
     const createdQuestion = makeQuestion({ slug: Slug.create('slug-x') })
-    
+
     questionsRepository.create(createdQuestion)
 
-    const { question } = await sut.execute({ slug: 'slug-x' })
+    const result = await sut.execute({ slug: 'slug-x' })
 
-    expect(question.slug.value).toBe(createdQuestion.slug.value)
+    expect(result.isRight()).toBe(true)
+    if (result.isRight()) {
+      const { question } = result.value
+      expect(question.slug.value).toBe(createdQuestion.slug.value)
+    }
   })
 })

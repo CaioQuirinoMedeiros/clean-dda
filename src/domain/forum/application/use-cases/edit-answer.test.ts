@@ -2,6 +2,7 @@ import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-r
 import { AnswersRepository } from '../repositories/answers-repository'
 import { makeAnswer } from 'test/factories/make-answer'
 import { EditAnswer } from './edit-answer'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let answersRepository: AnswersRepository
 let sut: EditAnswer
@@ -25,9 +26,7 @@ describe('EditAnswer', () => {
       content: 'content-Y'
     })
 
-    const answer = await answersRepository.findById(
-      createdAnswer.id.toString()
-    )
+    const answer = await answersRepository.findById(createdAnswer.id.toString())
 
     expect(answer?.content).toBe('content-Y')
   })
@@ -37,12 +36,13 @@ describe('EditAnswer', () => {
 
     await answersRepository.create(createdAnswer)
 
-    expect(
-      sut.execute({
-        answerId: createdAnswer.id.toString(),
-        authorId: 'another-author',
-        content: 'content-Y'
-      })
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: createdAnswer.id.toString(),
+      authorId: 'another-author',
+      content: 'content-Y'
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })
