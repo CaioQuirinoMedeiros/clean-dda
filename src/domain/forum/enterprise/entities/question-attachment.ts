@@ -6,7 +6,7 @@ interface QuestionAttachmentProps {
   attachmentId: UniqueEntityID
 }
 
-interface QuestionAttachmentCreateProps {
+export interface QuestionAttachmentCreateProps {
   questionId: UniqueEntityID
   attachmentId: UniqueEntityID
 }
