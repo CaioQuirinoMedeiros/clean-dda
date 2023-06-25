@@ -1,3 +1,4 @@
+import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments-repository'
 import {
   AnswersRepository,
   FindManyAnswersByQuestionIdParams
@@ -6,6 +7,10 @@ import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 export class InMemoryAnswersRepository implements AnswersRepository {
   public items: Answer[] = []
+
+  constructor(
+    private answerAttachmentsRepository: AnswerAttachmentsRepository
+  ) {}
 
   async create(answer: Answer): Promise<void> {
     this.items.push(answer)
@@ -22,6 +27,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     this.items = this.items.filter((item) => {
       return item.id.value !== answer.id.value
     })
+    this.answerAttachmentsRepository.deleteManyByAnswerId(answer.id.toString())
   }
 
   async save(answer: Answer): Promise<void> {
@@ -29,7 +35,9 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     this.items[answerIndex] = answer
   }
 
-  async findManyByQuestionId(params: FindManyAnswersByQuestionIdParams): Promise<Answer[]> {
+  async findManyByQuestionId(
+    params: FindManyAnswersByQuestionIdParams
+  ): Promise<Answer[]> {
     const { questionId, page } = params
 
     const size = 20

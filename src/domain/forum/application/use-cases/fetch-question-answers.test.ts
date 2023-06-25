@@ -4,13 +4,14 @@ import { AnswersRepository } from '../repositories/answers-repository'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { Answer } from '../../enterprise/entities/answer'
 import { makeAnswer } from 'test/factories/make-answer'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
 let answersRepository: AnswersRepository
 let sut: FetchQuestionAnswers
 
 describe('FetchQuestionAnswers', () => {
   beforeEach(() => {
-    answersRepository = new InMemoryAnswersRepository()
+    answersRepository = new InMemoryAnswersRepository(new InMemoryAnswerAttachmentsRepository())
     sut = new FetchQuestionAnswers(answersRepository)
   })
 

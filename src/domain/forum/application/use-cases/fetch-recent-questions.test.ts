@@ -5,13 +5,14 @@ import { makeQuestion } from 'test/factories/make-question'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Question } from '../../enterprise/entities/question'
 import { subDays } from 'date-fns'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
 let questionsRepository: QuestionsRepository
 let sut: FetchRecentQuestions
 
 describe('FetchRecentQuestions', () => {
   beforeEach(() => {
-    questionsRepository = new InMemoryQuestionsRepository()
+    questionsRepository = new InMemoryQuestionsRepository(new InMemoryQuestionAttachmentsRepository())
     sut = new FetchRecentQuestions(questionsRepository)
   })
 

@@ -4,6 +4,7 @@ import { QuestionCommentsRepository } from '../repositories/question-comments-re
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
 import { makeQuestion } from 'test/factories/make-question'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
 let questionsRepository: QuestionsRepository
 let questionCommentsRepository: QuestionCommentsRepository
@@ -11,7 +12,7 @@ let sut: CommentOnQuestion
 
 describe('CommentOnQuestion', () => {
   beforeEach(() => {
-    questionsRepository = new InMemoryQuestionsRepository()
+    questionsRepository = new InMemoryQuestionsRepository(new InMemoryQuestionAttachmentsRepository())
     questionCommentsRepository = new InMemoryQuestionCommentsRepository()
     sut = new CommentOnQuestion(questionsRepository, questionCommentsRepository)
   })

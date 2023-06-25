@@ -3,13 +3,16 @@ import { QuestionsRepository } from '../repositories/questions-repository'
 import { GetQuestionBySlug } from './get-question-by-slug'
 import { makeQuestion } from 'test/factories/make-question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
 let questionsRepository: QuestionsRepository
 let sut: GetQuestionBySlug
 
 describe('GetQuestionBySlug', () => {
   beforeEach(() => {
-    questionsRepository = new InMemoryQuestionsRepository()
+    questionsRepository = new InMemoryQuestionsRepository(
+      new InMemoryQuestionAttachmentsRepository()
+    )
     sut = new GetQuestionBySlug(questionsRepository)
   })
 

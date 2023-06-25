@@ -6,6 +6,8 @@ import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-r
 import { AnswersRepository } from '../repositories/answers-repository'
 import { makeAnswer } from 'test/factories/make-answer'
 import { NotAllowedError } from './errors/not-allowed-error'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
 let questionsRepository: QuestionsRepository
 let answersRepository: AnswersRepository
@@ -13,8 +15,8 @@ let sut: ChooseQuestionBestAnswer
 
 describe('ChooseQuestionBestAnswer', () => {
   beforeEach(() => {
-    questionsRepository = new InMemoryQuestionsRepository()
-    answersRepository = new InMemoryAnswersRepository()
+    questionsRepository = new InMemoryQuestionsRepository(new InMemoryQuestionAttachmentsRepository())
+    answersRepository = new InMemoryAnswersRepository(new InMemoryAnswerAttachmentsRepository())
     sut = new ChooseQuestionBestAnswer(questionsRepository, answersRepository)
   })
 

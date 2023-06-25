@@ -68,6 +68,7 @@ export class Question extends AggregateRoot<QuestionProps> {
 
   set attachments(attachments: QuestionAttachmentList) {
     this.props.attachments = attachments
+    this.props.updatedAt = new Date()
   }
 
   get createdAt() {
