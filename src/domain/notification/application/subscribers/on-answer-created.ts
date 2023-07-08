@@ -20,12 +20,12 @@ export class OnAnswerCreated implements EventHandler {
   }
 
   private async sendNewAnswerNotification(event: AnswerCreatedEvent) {
-    const answer = event.answer
+    const { answer } = event
+
     const question = await this.questionsRepository.findById(
       answer.questionId.toString()
     )
 
-    console.log('sendNewAnswerNotification', !!question)
     if (question) {
       const questionTitleTruncated = question.title
         .substring(0, 40)
@@ -37,6 +37,5 @@ export class OnAnswerCreated implements EventHandler {
         content: answer.excerpt
       })
     }
-
   }
 }
