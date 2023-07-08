@@ -3,13 +3,13 @@ import { Notification } from '../../enterprise/entities/notification'
 import { NotificationsRepository } from '../repositories/notifications-repository'
 import { Either, right } from '@/core/either'
 
-interface SendNotificationParams {
+export interface SendNotificationParams {
   recipientId: string
   title: string
   content: string
 }
 
-type SendNotificationReturn = Either<null, { notification: Notification }>
+export type SendNotificationReturn = Either<null, { notification: Notification }>
 
 export class SendNotification {
   constructor(private notificationsRepository: NotificationsRepository) {}

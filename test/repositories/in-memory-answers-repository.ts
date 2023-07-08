@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments-repository'
 import {
   AnswersRepository,
@@ -14,6 +15,8 @@ export class InMemoryAnswersRepository implements AnswersRepository {
 
   async create(answer: Answer): Promise<void> {
     this.items.push(answer)
+
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async findById(id: string): Promise<Answer | null> {
@@ -33,6 +36,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
   async save(answer: Answer): Promise<void> {
     const answerIndex = this.items.findIndex((item) => item.id === answer.id)
     this.items[answerIndex] = answer
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async findManyByQuestionId(
